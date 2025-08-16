@@ -3,6 +3,7 @@ README.md
 pyproject.toml
 src/edhrec_web/__init__.py
 src/edhrec_web/caching.py
+src/edhrec_web/py.typed
 src/edhrec_web/pyedhrec.py
 src/edhrec_web/utils.py
 src/edhrec_web.egg-info/PKG-INFO

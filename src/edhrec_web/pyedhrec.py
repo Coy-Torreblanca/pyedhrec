@@ -1,6 +1,7 @@
 import json
 import re
 import requests
+from typing import Any, Optional
 
 from .caching import (
     commander_cache,
@@ -127,7 +128,9 @@ class EDHRec:
         if "pageProps" in response:
             return response.get("pageProps", {}).get("data")
 
-    def _get_cardlist_from_commander(self, card_name: str, tag: str = None) -> dict:
+    def _get_cardlist_from_commander(
+        self, card_name: str, tag: Optional[str] = None
+    ) -> dict[str, Any]:
         card_data = self.get_commander_data(card_name)
         container = card_data.get("container", {})
         json_dict = container.get("json_dict", {})
@@ -159,11 +162,11 @@ class EDHRec:
         return uri
 
     @card_detail_cache
-    def get_card_details(self, card_name: str) -> dict:
+    def get_card_details(self, card_name: str) -> dict[str, Any]:
         formatted_card_name = self.format_card_name(card_name)
         uri = f"{self._json_base_url}/{formatted_card_name}"
-        res = self._get(uri)
-        return res
+        res = self._get(uri)  # type: ignore
+        return res  # type: ignore
 
     @combo_cache
     def get_card_combos(self, card_name: str) -> dict:
@@ -270,7 +273,9 @@ class EDHRec:
         res = self._get(uri)
         return self._get_nextjs_data(res)
 
-    def _get_cardlist_from_non_commander(self, card_name: str, tag: str = None) -> dict:
+    def _get_cardlist_from_non_commander(
+        self, card_name: str, tag: Optional[str] = None
+    ) -> dict[str, Any]:
         card_data = self.get_card_page_data(card_name)
         card_lists = (
             card_data.get("container", {}).get("json_dict", {}).get("cardlists", [])
