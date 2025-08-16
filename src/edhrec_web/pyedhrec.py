@@ -288,5 +288,9 @@ class EDHRec:
                 result[_header] = _card_list
         return result
 
+    # TODO This is providing not found:
+    # https://edhrec.com/cards/teferis-puzzle-box
+    # 2025-08-05 13:41:03 [info     ] Getting recommendations for card 'Teferi's Puzzle Box'
+    # 2025-08-05 13:41:03 [error    ] Failed to process Teferi's Puzzle Box: 404 Client Error: Not Found for url: https://edhrec.com/_next/data/QIZ9xGyEY7klG3cYVBtEw/cards/teferis-puzzle-box.json
     def get_high_synergy_cards_non_commander(self, card_name: str):
         return self._get_cardlist_from_card_page(card_name, "highsynergycards")
