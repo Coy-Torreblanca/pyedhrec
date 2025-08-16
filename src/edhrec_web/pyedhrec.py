@@ -127,7 +127,7 @@ class EDHRec:
         if "pageProps" in response:
             return response.get("pageProps", {}).get("data")
 
-    def _get_cardlist_from_container(self, card_name: str, tag: str = None) -> dict:
+    def _get_cardlist_from_commander(self, card_name: str, tag: str = None) -> dict:
         card_data = self.get_commander_data(card_name)
         container = card_data.get("container", {})
         json_dict = container.get("json_dict", {})
@@ -207,59 +207,59 @@ class EDHRec:
         return data
 
     def get_commander_cards(self, card_name: str) -> dict:
-        card_list = self._get_cardlist_from_container(card_name)
+        card_list = self._get_cardlist_from_commander(card_name)
         return card_list
 
     def get_new_cards(self, card_name: str) -> dict:
-        card_list = self._get_cardlist_from_container(card_name, "newcards")
+        card_list = self._get_cardlist_from_commander(card_name, "newcards")
         return card_list
 
     def get_high_synergy_cards(self, card_name: str) -> dict:
-        card_list = self._get_cardlist_from_container(card_name, "highsynergycards")
+        card_list = self._get_cardlist_from_commander(card_name, "highsynergycards")
         return card_list
 
     def get_top_cards(self, card_name: str) -> dict:
-        card_list = self._get_cardlist_from_container(card_name, "topcards")
+        card_list = self._get_cardlist_from_commander(card_name, "topcards")
         return card_list
 
     def get_top_creatures(self, card_name: str) -> dict:
-        card_list = self._get_cardlist_from_container(card_name, "creatures")
+        card_list = self._get_cardlist_from_commander(card_name, "creatures")
         return card_list
 
     def get_top_instants(self, card_name: str) -> dict:
-        card_list = self._get_cardlist_from_container(card_name, "instants")
+        card_list = self._get_cardlist_from_commander(card_name, "instants")
         return card_list
 
     def get_top_sorceries(self, card_name: str) -> dict:
-        card_list = self._get_cardlist_from_container(card_name, "sorceries")
+        card_list = self._get_cardlist_from_commander(card_name, "sorceries")
         return card_list
 
     def get_top_artifacts(self, card_name: str) -> dict:
-        card_list = self._get_cardlist_from_container(card_name, "utilityartifacts")
+        card_list = self._get_cardlist_from_commander(card_name, "utilityartifacts")
         return card_list
 
     def get_top_mana_artifacts(self, card_name: str) -> dict:
-        card_list = self._get_cardlist_from_container(card_name, "manaartifacts")
+        card_list = self._get_cardlist_from_commander(card_name, "manaartifacts")
         return card_list
 
     def get_top_enchantments(self, card_name: str) -> dict:
-        card_list = self._get_cardlist_from_container(card_name, "enchantments")
+        card_list = self._get_cardlist_from_commander(card_name, "enchantments")
         return card_list
 
     def get_top_battles(self, card_name: str) -> dict:
-        card_list = self._get_cardlist_from_container(card_name, "battles")
+        card_list = self._get_cardlist_from_commander(card_name, "battles")
         return card_list
 
     def get_top_planeswalkers(self, card_name: str) -> dict:
-        card_list = self._get_cardlist_from_container(card_name, "planeswalkers")
+        card_list = self._get_cardlist_from_commander(card_name, "planeswalkers")
         return card_list
 
     def get_top_lands(self, card_name: str) -> dict:
-        card_list = self._get_cardlist_from_container(card_name, "lands")
+        card_list = self._get_cardlist_from_commander(card_name, "lands")
         return card_list
 
     def get_top_utility_lands(self, card_name: str) -> dict:
-        card_list = self._get_cardlist_from_container(card_name, "utilitylands")
+        card_list = self._get_cardlist_from_commander(card_name, "utilitylands")
         return card_list
 
     # Extract synergies for cards that are not commanders.
@@ -270,7 +270,7 @@ class EDHRec:
         res = self._get(uri)
         return self._get_nextjs_data(res)
 
-    def _get_cardlist_from_card_page(self, card_name: str, tag: str = None) -> dict:
+    def _get_cardlist_from_non_commander(self, card_name: str, tag: str = None) -> dict:
         card_data = self.get_card_page_data(card_name)
         card_lists = (
             card_data.get("container", {}).get("json_dict", {}).get("cardlists", [])
@@ -288,9 +288,5 @@ class EDHRec:
                 result[_header] = _card_list
         return result
 
-    # TODO This is providing not found:
-    # https://edhrec.com/cards/teferis-puzzle-box
-    # 2025-08-05 13:41:03 [info     ] Getting recommendations for card 'Teferi's Puzzle Box'
-    # 2025-08-05 13:41:03 [error    ] Failed to process Teferi's Puzzle Box: 404 Client Error: Not Found for url: https://edhrec.com/_next/data/QIZ9xGyEY7klG3cYVBtEw/cards/teferis-puzzle-box.json
     def get_high_synergy_cards_non_commander(self, card_name: str):
-        return self._get_cardlist_from_card_page(card_name, "highsynergycards")
+        return self._get_cardlist_from_non_commander(card_name, "highsynergycards")
